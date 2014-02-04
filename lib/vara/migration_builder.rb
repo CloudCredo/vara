@@ -1,9 +1,9 @@
 module Vara
   class MigrationBuilder
-    def self.build_for_all_previous_versions(product_name, installation_version, to_version)
+    def build_for_all_previous_versions(product_name, installation_version, to_version)
       build_to_version = to_version.split('.').last.to_i
       from_versions = (1...build_to_version).map { |version| "0.0.0.#{version}" }
-      new.build(product_name, installation_version, to_version, from_versions)
+      build(product_name, installation_version, to_version, from_versions)
     end
 
     def build(product_name, installation_version, to_version, from_versions)

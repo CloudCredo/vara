@@ -5,7 +5,7 @@ require 'yaml'
 
 require 'vara/migration_builder'
 
-def fail(message)
+def exit_with_message(message)
   warn message
   exit 1
 end
@@ -28,16 +28,17 @@ OptionParser.new do |opts|
 end.parse!
 
 product_name = options.fetch(:product_name) do
-  fail('product name is required')
+  exit_with_message('product name is required')
 end
 to_version = options.fetch(:to_version) do
-  fail('to version is required')
+  exit_with_message('to version is required')
 end
 output = options.fetch(:output) do
-  fail('output is required')
+  exit_with_message('output is required')
 end
 
-result = Vara::MigrationBuilder.build_for_all_previous_versions(
+migration_builder = Vara::MigrationBuilder.new
+result = migration_builder.build_for_all_previous_versions(
   product_name,
   '1.0',
   to_version

@@ -12,19 +12,13 @@ describe Vara::MigrationBuilder do
   end
 
   describe 'automatically working out which versions we need to migrate from' do
-    let(:mock_migration_builder) { double('Vara::MigrationBuilder') }
-
-    before do
-      allow(Vara::MigrationBuilder).to receive(:new).and_return(mock_migration_builder)
-    end
-
-    it 'works' do
+    it 'includes all of the previous versions' do
       previous_versions = %w(0.0.0.1 0.0.0.2 0.0.0.3 0.0.0.4 0.0.0.5 0.0.0.6 0.0.0.7 0.0.0.8 0.0.0.9 0.0.0.10)
-      expect(mock_migration_builder).to receive(:build)
+      expect(migration_builder).to receive(:build)
                                         .with(product_name, installation_version,
                                               to_version, previous_versions)
 
-      Vara::MigrationBuilder.build_for_all_previous_versions(product_name, installation_version, to_version)
+      migration_builder.build_for_all_previous_versions(product_name, installation_version, to_version)
     end
   end
 

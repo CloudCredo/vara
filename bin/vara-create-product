@@ -1,0 +1,69 @@
+#!/usr/bin/env ruby
+require 'optparse'
+require 'tmpdir'
+
+require 'vara/aws_download_client'
+require 'vara/metadata_coordinator'
+require 'vara/product_artifact_creator'
+require 'vara/release_download_manager'
+require 'vara/stemcell_resource_manager'
+
+def exit_with_message(message)
+  warn message
+  exit 1
+end
+
+options = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage: #{File.basename(__FILE__)} [options]"
+
+  opts.on('-s', '--service-type TYPE', 'The type of product to build') do |service_type|
+    options[:service_type] = service_type
+  end
+
+  opts.on('-v', '--product-version VERSION', 'The version of the product to build') do |product_version|
+    options[:product_version] = product_version
+  end
+
+  opts.on('-m', '--metadata-template-path PATH', 'The path to the metadata template') do |metadata_template_path|
+    options[:metadata_template_path] = metadata_template_path
+  end
+
+  opts.on('-a', '--access_key_id ID', 'The AWS ID to download the release tarball') do |access_key_id|
+    options[:access_key_id] = access_key_id
+  end
+
+  opts.on('-k', '--secret_access_key KEY', 'The AWS Secret Access Key to download the release tarball') do |secret_access_key|
+    options[:secret_access_key] = secret_access_key
+  end
+
+end.parse!
+
+service_type = options.fetch(:service_type) do
+  exit_with_message('service type is required')
+end
+product_version = options.fetch(:product_version) do
+  exit_with_message('product version is required')
+end
+metadata_template_path = options.fetch(:metadata_template_path) do
+  exit_with_message('metadata template path is required')
+end
+access_key_id = options.fetch(:access_key_id) do
+  exit_with_message('access key id is required')
+end
+secret_access_key = options.fetch(:secret_access_key) do
+  exit_with_message('secret access key is required')
+end
+
+product_name = "p-#{service_type}"
+working_directory = '/Users/pivotal'
+stemcell_url = 'http://bosh-jenkins-artifacts.s3.amazonaws.com/bosh-stemcell/vsphere/bosh-stemcell-1798-vsphere-esxi-ubuntu.tgz'
+s3_bucket_name = 'cf-services-internal-builds'
+
+aws_download_client = Vara::AwsDownloadClient.new(s3_bucket_name, access_key_id, secret_access_key)
+release_download_manager = Vara::ReleaseDownloadManager.new(aws_download_client, service_type, working_directory)
+metadata_coordinator = Vara::MetadataCoordinator.new(metadata_template_path, Vara::StemcellResourceManager.new)
+product_artifact_creator = Vara::ProductArtifactCreator.new(working_directory, release_download_manager, stemcell_url, metadata_coordinator)
+
+product_artifact_zip_path = product_artifact_creator.create(product_name, product_version)
+puts "Product Artifact Zip created at: #{product_artifact_zip_path}"

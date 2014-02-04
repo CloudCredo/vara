@@ -1,5 +1,6 @@
-require 'cli'
 require 'net/http'
+
+require 'cli'
 
 module Vara
   class InvalidStemcellResourceError < StandardError
