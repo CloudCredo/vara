@@ -1,0 +1,5 @@
+---
+parent:
+  child: /tmp/cool/directory/yo
+  child_with_children:
+    grandchild: some_cool_config

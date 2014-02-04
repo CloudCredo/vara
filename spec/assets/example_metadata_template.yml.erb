@@ -1,0 +1,17 @@
+---
+name: <!--%= product_name %-->
+product_version: <!--%= product_version %-->
+metadata_version: 1.0
+stemcell:
+  name: <!--%= stemcell[:name] %-->
+  version: "<!--%= stemcell[:version] %-->"
+  file: <!--%= stemcell[:tarball] %-->
+  md5: <!--%= stemcell[:md5sum] %-->
+releases:
+  - name: <!--%= release[:name] %-->
+    version: "<!--%= release[:version] %-->"
+    file: <!--%= release[:tarball] %-->
+    md5: <!--%= release[:md5sum] %-->
+provides_product_versions:
+  - name: <!--%= product_name %-->
+    version: <!--%= product_version %-->
