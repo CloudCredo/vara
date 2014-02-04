@@ -27,11 +27,11 @@ module Vara
 
     private
 
+    attr_reader :bucket
+
     def local_file_path(local_dir, object_key)
       filename = object_key.split('/').last
       File.join(local_dir, filename)
     end
-
-    attr_reader :bucket
   end
 end

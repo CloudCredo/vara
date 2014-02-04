@@ -1,0 +1,48 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+require 'yaml'
+
+require 'vara/migration_builder'
+
+def fail(message)
+  warn message
+  exit 1
+end
+
+options = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage: #{File.basename(__FILE__)} [options]"
+
+  opts.on('-n', '--product-name NAME', 'The name of the product') do |product_name|
+    options[:product_name] = product_name
+  end
+
+  opts.on('-t', '--to-version VERSION', 'The version we are upgrading to') do |to_version|
+    options[:to_version] = to_version
+  end
+
+  opts.on('-o', '--output FILE', 'The output of where to place the migration file') do |output|
+    options[:output] = output
+  end
+end.parse!
+
+product_name = options.fetch(:product_name) do
+  fail('product name is required')
+end
+to_version = options.fetch(:to_version) do
+  fail('to version is required')
+end
+output = options.fetch(:output) do
+  fail('output is required')
+end
+
+result = Vara::MigrationBuilder.build_for_all_previous_versions(
+  product_name,
+  '1.0',
+  to_version
+)
+
+File.write(output, result.to_yaml)
+
+puts "migration written to #{File.join(Dir.pwd, output)}"
