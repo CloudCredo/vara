@@ -57,7 +57,7 @@ secret_access_key = options.fetch(:secret_access_key) do
 end
 
 product_name = "p-#{service_type}"
-working_directory = '/Users/pivotal'
+working_directory = Dir.tmpdir
 stemcell_host = 'http://bosh-jenkins-artifacts.s3.amazonaws.com'
 stemcell_url = "#{stemcell_host}/bosh-stemcell/vsphere/bosh-stemcell-1798-vsphere-esxi-ubuntu.tgz"
 s3_bucket_name = 'cf-services-internal-builds'
