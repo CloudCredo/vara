@@ -4,6 +4,7 @@ require 'tmpdir'
 
 require 'vara/aws_download_client'
 require 'vara/metadata_coordinator'
+require 'vara/migration_builder'
 require 'vara/product_artifact_creator'
 require 'vara/release_download_manager'
 require 'vara/stemcell_resource_manager'
@@ -63,7 +64,8 @@ s3_bucket_name = 'cf-services-internal-builds'
 aws_download_client = Vara::AwsDownloadClient.new(s3_bucket_name, access_key_id, secret_access_key)
 release_download_manager = Vara::ReleaseDownloadManager.new(aws_download_client, service_type, working_directory)
 metadata_coordinator = Vara::MetadataCoordinator.new(metadata_template_path, Vara::StemcellResourceManager.new)
-product_artifact_creator = Vara::ProductArtifactCreator.new(working_directory, release_download_manager, stemcell_url, metadata_coordinator)
+migration_builder = Vara::MigrationBuilder.new
+product_artifact_creator = Vara::ProductArtifactCreator.new(working_directory, release_download_manager, stemcell_url, metadata_coordinator, migration_builder)
 
 product_artifact_zip_path = product_artifact_creator.create(product_name, product_version)
 puts "Product Artifact Zip created at: #{product_artifact_zip_path}"
