@@ -21,7 +21,7 @@ module Vara
           releases: release_tarball_path,
           stemcells: stemcell_path,
           metadata: metadata_path,
-          content_migrations: migration_path,
+          content_migrations: migration_path
       }
 
       artifact_path = artifact_path(product_name, product_version)

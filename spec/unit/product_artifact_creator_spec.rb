@@ -29,7 +29,10 @@ describe Vara::ProductArtifactCreator do
       artifact_zip = File.join(artifact_dir, 'foo-1.0.zip')
       expect(Vara::ProductArtifactZipper).to receive(:new).with(
                                                artifact_zip,
-                                               hash_including(content_migrations: File.join(artifact_dir, 'migration-1.0.yml'))
+                                               hash_including(content_migrations: File.join(
+                                                 artifact_dir,
+                                                 'migration-1.0.yml'
+                                               ))
                                              )
       creator.create('foo', '1.0')
     end

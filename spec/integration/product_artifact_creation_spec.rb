@@ -99,9 +99,9 @@ describe 'creation of a product artifact zip' do
     expect(migration).to include(
                           'product' => product_name,
                           'to_version' => product_version,
-                          'installation_version' => '1.0',
+                          'installation_version' => '1.0'
                         )
-    versions = migration.fetch('migrations').map { |migration| migration.fetch('product_version') }
+    versions = migration.fetch('migrations').map { |m| m.fetch('product_version') }
     expect(versions).to eq(%w(0.0.0.1 0.0.0.2))
   end
 end
