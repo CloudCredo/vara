@@ -29,11 +29,11 @@ OptionParser.new do |opts|
     options[:metadata_template_path] = metadata_template_path
   end
 
-  opts.on('-a', '--access_key_id ID', 'The AWS ID to download the release tarball') do |access_key_id|
+  opts.on('-a', '--access-key-id ID', 'The AWS ID to download the release tarball') do |access_key_id|
     options[:access_key_id] = access_key_id
   end
 
-  opts.on('-k', '--secret_access_key KEY', 'The AWS Secret Access Key to download the release tarball') do |secret_access_key|
+  opts.on('-k', '--secret-access-key KEY', 'The AWS Secret Access Key to download the release tarball') do |secret_access_key|
     options[:secret_access_key] = secret_access_key
   end
 
