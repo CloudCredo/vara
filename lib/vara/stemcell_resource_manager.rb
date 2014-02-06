@@ -1,6 +1,10 @@
 require 'net/http'
 
-require 'cli'
+require 'vara/tmpdir_quarantine'
+
+quarantine_tmpdir_code do
+  require 'cli'
+end
 
 module Vara
   class InvalidStemcellResourceError < StandardError
@@ -74,7 +78,6 @@ module Vara
           fail "Problem downloading resource: #{download_url}"
         end
       end
-      puts download_path
       download_path
     end
   end

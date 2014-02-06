@@ -13,9 +13,16 @@ module Vara
 
     def create(product_name, product_version)
       release_tarball_path = download_release
+      puts "Release downloaded to #{release_tarball_path}"
+
       stemcell_path = download_stemcell
+      puts "Stemcell downloaded to: #{stemcell_path}"
+
       metadata_path = template_metadata(product_name, product_version, release_tarball_path, stemcell_path)
+      puts "Metadata templated to: #{metadata_path}"
+
       migration_path = build_migration_file(product_name, product_version)
+      puts "Migration file outputted to: #{migration_path}"
 
       artifact_components = {
           releases: release_tarball_path,

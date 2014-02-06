@@ -29,7 +29,7 @@ module Vara
     end
 
     def download_object(object_to_download)
-      aws_download_client.download_object(object_to_download, @local_release_dir)
+      aws_download_client.download_object(object_to_download, local_release_dir)
     end
 
     def tgz_release_regex

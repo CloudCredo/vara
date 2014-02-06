@@ -6,6 +6,7 @@ require 'yaml'
 require 'support/unzip'
 
 require 'vara/metadata_coordinator'
+require 'vara/migration_builder'
 require 'vara/product_artifact_creator'
 require 'vara/release_download_manager'
 

@@ -1,5 +1,10 @@
-require 'cli'
-require_relative 'bosh_mediator'
+require 'vara/tmpdir_quarantine'
+
+quarantine_tmpdir_code do
+  require 'cli'
+end
+
+require 'vara/bosh_mediator'
 
 module Vara
   module BoshMediatorFactory

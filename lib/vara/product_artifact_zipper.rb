@@ -8,7 +8,7 @@ module Vara
     def zip!
       remove_previous_artifacts
 
-      in_tmp_dir do |zip_temp_dir|
+      in_tmp_dir do
         copy_dirs_and_files
         create_zip!
       end
@@ -25,7 +25,7 @@ module Vara
     def in_tmp_dir
       Dir.mktmpdir do |temp_dir|
         FileUtils.cd(temp_dir) do
-          yield temp_dir
+          yield
         end
       end
     end
