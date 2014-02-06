@@ -25,7 +25,7 @@ describe Vara::ProductArtifactCreator do
       expect(path).to eq(File.join(artifact_dir, 'hello-1.0.zip'))
     end
 
-    it 'includes the migration data in the zip file' do
+    xit 'includes the migration data in the zip file' do
       artifact_zip = File.join(artifact_dir, 'foo-1.0.zip')
       expect(Vara::ProductArtifactZipper).to receive(:new).with(
                                                artifact_zip,
