@@ -71,7 +71,7 @@ product_artifact_creator = Vara::ProductArtifactCreator.new(working_directory, r
 
 product_artifact_zip_path = product_artifact_creator.create(product_name, product_version)
 
-if !File.exist?(product_artifact_zip_path)
+unless File.exist?(product_artifact_zip_path)
   puts "Product Artifact Zip missing from: #{product_artifact_zip_path}!"
   exit 1
 end
