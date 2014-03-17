@@ -70,4 +70,10 @@ product_artifact_creator = Vara::ProductArtifactCreator.new(working_directory, r
                                                             stemcell_url, metadata_coordinator, migration_builder)
 
 product_artifact_zip_path = product_artifact_creator.create(product_name, product_version)
+
+if !File.exist?(product_artifact_zip_path)
+  puts "Product Artifact Zip missing from: #{product_artifact_zip_path}!"
+  exit 1
+end
+
 puts "Product Artifact Zip created at: #{product_artifact_zip_path}"
