@@ -89,7 +89,7 @@ describe 'creation of a product artifact zip' do
                            )
   end
 
-  xit 'includes a migration file in the content_migrations directory inside the zip' do
+  it 'includes a migration file in the content_migrations directory inside the zip' do
     artifact_path = product_artifact_creator.create(product_name, product_version)
     unzip_destination = unzip_artifact(artifact_path, local_working_dir)
 
