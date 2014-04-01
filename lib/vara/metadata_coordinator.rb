@@ -55,8 +55,8 @@ module Vara
 
     def name_and_version_from_tarball_path(release_tarball_path)
       name_and_version = File.basename(release_tarball_path, '.tgz')
-      version = name_and_version.split('-').last
-      name = name_and_version.gsub(/(.*)(-#{version})/, '\1')
+      version = name_and_version.match(/([^\-]+(?:-dev)?$)/)[1]
+      name = name_and_version.gsub(/(.*)(-#{Regexp.escape(version)})/, '\1')
       [name, version]
     end
 
