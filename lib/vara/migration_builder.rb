@@ -2,7 +2,7 @@ module Vara
   class MigrationBuilder
     def build_for_all_previous_versions(product_name, installation_version, to_version)
       build_to_version = to_version.split('.').last.to_i
-      from_versions = (1...build_to_version).map { |version| "0.0.0.#{version}" }
+      from_versions = (1...build_to_version).map { |version| "1.0.0.#{version}" }
       build(product_name, installation_version, to_version, from_versions)
     end
 
@@ -22,12 +22,12 @@ module Vara
 
     def product_version_migration(from_version, to_version)
       {
-        'product_version' => from_version,
+        'from_version' => from_version,
         'rules' => [
           {
             'type' => 'update',
             'selector' => 'product_version',
-            'value' => to_version
+            'to' => to_version
           }
         ]
       }

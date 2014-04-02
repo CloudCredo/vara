@@ -4,7 +4,7 @@ Feature: Building a migration
   Then I need to be able to pass the relevant information into the command line
 
   Background: Running the command
-    When I run `vara-generate-migration --product-name redis --to-version '0.0.0.5' --output migration.yml`
+    When I run `vara-generate-migration --product-name redis --to-version '1.0.0.5' --output migration.yml`
 
   Scenario: Exit status
     Then the exit status should be 0
@@ -14,5 +14,5 @@ Feature: Building a migration
 
   Scenario: Checking the file for output
     Then the file "migration.yml" should contain "product: redis"
-    And the file "migration.yml" should contain "to_version: 0.0.0.5"
-    And the file "migration.yml" should contain "product_version: 0.0.0.4"
+    And the file "migration.yml" should contain "to_version: 1.0.0.5"
+    And the file "migration.yml" should contain "from_version: 1.0.0.4"

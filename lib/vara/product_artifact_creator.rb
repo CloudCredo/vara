@@ -61,7 +61,7 @@ module Vara
     end
 
     def build_migration_file(product_name, product_version)
-      result = migration_builder.build_for_all_previous_versions(product_name, '1.0', product_version)
+      result = migration_builder.build_for_all_previous_versions(product_name, '1.1', product_version)
       migration_path = File.join(artifact_dir, "migration-#{product_version}.yml")
       File.write(migration_path, result.to_yaml)
       migration_path
