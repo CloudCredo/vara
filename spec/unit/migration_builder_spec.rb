@@ -2,9 +2,9 @@ require 'vara/migration_builder'
 
 describe Vara::MigrationBuilder do
   let(:product_name) { 'redis' }
-  let(:installation_version) { '1.0' }
-  let(:to_version) { '0.0.0.11' }
-  let(:from_versions) { %w(0.0.0.2 0.0.0.3) }
+  let(:installation_version) { '1.1' }
+  let(:to_version) { '1.0.0.11' }
+  let(:from_versions) { %w(1.0.0.2 1.0.0.3) }
   let(:migration_builder) { Vara::MigrationBuilder.new }
   let(:result) do
     migration_builder.build(product_name, installation_version,
@@ -13,7 +13,7 @@ describe Vara::MigrationBuilder do
 
   describe 'automatically working out which versions we need to migrate from' do
     it 'includes all of the previous versions' do
-      previous_versions = %w(0.0.0.1 0.0.0.2 0.0.0.3 0.0.0.4 0.0.0.5 0.0.0.6 0.0.0.7 0.0.0.8 0.0.0.9 0.0.0.10)
+      previous_versions = %w(1.0.0.1 1.0.0.2 1.0.0.3 1.0.0.4 1.0.0.5 1.0.0.6 1.0.0.7 1.0.0.8 1.0.0.9 1.0.0.10)
       expect(migration_builder).to receive(:build)
                                         .with(product_name, installation_version,
                                               to_version, previous_versions)
@@ -37,12 +37,12 @@ describe Vara::MigrationBuilder do
 
     def product_version_migration(from_version, to_version)
       {
-        'product_version' => from_version,
+        'from_version' => from_version,
         'rules' => [
           {
             'type' => 'update',
             'selector' => 'product_version',
-            'value' => to_version
+            'to' => to_version
           }
         ]
       }

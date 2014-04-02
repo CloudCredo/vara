@@ -30,6 +30,14 @@ OptionParser.new do |opts|
     options[:metadata_template_path] = metadata_template_path
   end
 
+  opts.on('-b', '--s3-bucket-name bucket', 'The AWS S3 bucket containing the release tarball') do |s3_bucket_name|
+    options[:s3_bucket_name] = s3_bucket_name
+  end
+
+  opts.on('-t', '--stemcell-name stemcell', 'The public stemcell to use') do |stemcell_name|
+    options[:stemcell_name] = stemcell_name
+  end
+
   opts.on('-a', '--access-key-id ID', 'The AWS ID to download the release tarball') do |access_key_id|
     options[:access_key_id] = access_key_id
   end
@@ -49,6 +57,12 @@ end
 metadata_template_path = options.fetch(:metadata_template_path) do
   exit_with_message('metadata template path is required')
 end
+s3_bucket_name = options.fetch(:s3_bucket_name) do
+  exit_with_message('S3 bucket name is required')
+end
+stemcell_name = options.fetch(:stemcell_name) do
+  exit_with_message('stemcell name is required')
+end
 access_key_id = options.fetch(:access_key_id) do
   exit_with_message('access key id is required')
 end
@@ -59,8 +73,7 @@ end
 product_name = "p-#{service_type}"
 working_directory = Dir.tmpdir
 stemcell_host = 'http://bosh-jenkins-artifacts.s3.amazonaws.com'
-stemcell_url = "#{stemcell_host}/bosh-stemcell/vsphere/bosh-stemcell-1798-vsphere-esxi-ubuntu.tgz"
-s3_bucket_name = 'cf-services-internal-builds'
+stemcell_url = "#{stemcell_host}/bosh-stemcell/vsphere/#{stemcell_name}"
 
 aws_download_client = Vara::AwsDownloadClient.new(s3_bucket_name, access_key_id, secret_access_key)
 release_download_manager = Vara::ReleaseDownloadManager.new(aws_download_client, service_type, working_directory)

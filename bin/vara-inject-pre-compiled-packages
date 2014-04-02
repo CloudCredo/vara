@@ -1,0 +1,33 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+require 'yaml'
+
+require 'vara/pre_compiled_packages'
+require 'tmpdir'
+
+def exit_with_message(message)
+  warn message
+  exit 1
+end
+
+options = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage: #{File.basename(__FILE__)} [options]"
+
+  opts.on('-p', '--product-file NAME', 'The P1 artefact package file') do |product_file|
+    options[:product_file] = product_file
+  end
+
+end.parse!
+
+product_file = options.fetch(:product_file) do
+  exit_with_message('product file name is required')
+end
+
+Dir.mktmpdir do |working_directory|
+  worker = Vara::PreCompiledPackages.new(working_directory, product_file)
+  worker.unpack
+  worker.write_new_metadata
+  worker.repack
+end
