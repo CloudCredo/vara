@@ -14,12 +14,16 @@ def exit_with_message(message)
   exit 1
 end
 
-options = {}
+options = { :print => false }
 OptionParser.new do |opts|
   opts.banner = "Usage: #{File.basename(__FILE__)} [options]"
 
   opts.on('-s', '--service-type TYPE', 'The type of product to build') do |service_type|
     options[:service_type] = service_type
+  end
+
+  opts.on('-n', '--product-name NAME', 'The name of the product to build') do |product_name|
+    options[:product_name] = product_name
   end
 
   opts.on('-v', '--product-version VERSION', 'The version of the product to build') do |product_version|
@@ -38,11 +42,16 @@ OptionParser.new do |opts|
     options[:secret_access_key] = secret_key
   end
 
+  opts.on('-p', '--print', "Print the details that will be used when creating the product. Doesn't create the product") do
+    options[:print] = true
+  end
+
 end.parse!
 
 service_type = options.fetch(:service_type) do
   exit_with_message('service type is required')
 end
+product_name = options.fetch(:product_name, "p-#{service_type}")
 product_version = options.fetch(:product_version) do
   exit_with_message('product version is required')
 end
@@ -56,7 +65,14 @@ secret_access_key = options.fetch(:secret_access_key) do
   exit_with_message('secret access key is required')
 end
 
-product_name = "p-#{service_type}"
+if options.fetch(:print)
+  puts "Service type: #{service_type}"
+  puts "Product name: #{product_name}"
+  puts "Product version: #{product_version}"
+  puts "Metadata template: #{metadata_template_path}"
+  exit 0
+end
+
 working_directory = Dir.tmpdir
 stemcell_host = 'http://bosh-jenkins-artifacts.s3.amazonaws.com'
 stemcell_url = "#{stemcell_host}/bosh-stemcell/vsphere/bosh-stemcell-1798-vsphere-esxi-ubuntu.tgz"
