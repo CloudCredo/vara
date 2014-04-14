@@ -75,7 +75,7 @@ end
 
 working_directory = Dir.tmpdir
 stemcell_host = 'http://bosh-jenkins-artifacts.s3.amazonaws.com'
-stemcell_url = "#{stemcell_host}/bosh-stemcell/vsphere/bosh-stemcell-1798-vsphere-esxi-ubuntu.tgz"
+stemcell_url = "#{stemcell_host}/bosh-stemcell/vsphere/bosh-stemcell-2366-vsphere-esxi-ubuntu.tgz"
 s3_bucket_name = 'cf-services-internal-builds'
 
 aws_download_client = Vara::AwsDownloadClient.new(s3_bucket_name, access_key_id, secret_access_key)
