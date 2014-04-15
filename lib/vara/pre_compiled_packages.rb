@@ -74,11 +74,11 @@ module Vara
 
     def increment_filename(file_path)
       filename = File.basename(file_path)
-      filename_components = short_filename.split('.')
+      filename_components = filename.split('.')
 
       # The penultimate component is the build number that we want to
       # increment
-      filename_components[-2] = short_filename_components[-2].succ
+      filename_components[-2] = filename_components[-2].succ
 
       filename_components.join('.')
     end
