@@ -85,10 +85,14 @@ module Vara
 
     def compiled_package_metadata
       package_tarball_path = download_compiled_package
-      { compiled_package: { name:  "#{release_metadata[:release_name]}",
-                            file: "#{File.basename(package_tarball_path)}",
-                            version: "#{release_metadata[:release_version]}",
-                            md5: "#{Digest::MD5.file(package_tarball_path).hexdigest}" } }
+      {
+        "compiled_package" => {
+          "name" => "#{release_metadata[:release_name]}",
+          "file" => "#{File.basename(package_tarball_path)}",
+          "version" => "#{release_metadata[:release_version]}",
+          "md5" => "#{Digest::MD5.file(package_tarball_path).hexdigest}"
+        }
+      }
     end
 
     def increment_version
