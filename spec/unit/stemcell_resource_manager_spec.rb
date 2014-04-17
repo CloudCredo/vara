@@ -24,7 +24,7 @@ module Vara
 
         it 'downloads a stemcell successfully from a URL' do
           stemcell_file_name = 'stemcell.tgz'
-          expect(File).to receive(:exists?).at_least(:once).and_return(true)
+          expect(File).to receive(:exist?).at_least(:once).and_return(true)
           expect(File).to receive(:mtime).and_return(Time.at(1383737141))
 
           stemcell_url = "http://www.example.com/#{stemcell_file_name}"
@@ -57,7 +57,7 @@ module Vara
             downloaded_file_data = File.open(local_downloaded_stemcell_resource, 'rb') { |io| io.read }
             expect(downloaded_file_data).to eq expected_stemcell_file_contents
           ensure
-            File.delete(local_downloaded_stemcell_resource) if File.exists?(local_downloaded_stemcell_resource)
+            File.delete(local_downloaded_stemcell_resource) if File.exist?(local_downloaded_stemcell_resource)
           end
         end
       end
@@ -77,7 +77,7 @@ module Vara
             stemcell_manager.download_stemcell(stemcell_url)
           end.to raise_error("Problem downloading resource: #{stemcell_url}")
         ensure
-          File.delete(local_downloaded_stemcell_resource) if File.exists?(local_downloaded_stemcell_resource)
+          File.delete(local_downloaded_stemcell_resource) if File.exist?(local_downloaded_stemcell_resource)
         end
 
       end

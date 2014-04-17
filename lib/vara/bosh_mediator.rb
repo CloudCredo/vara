@@ -42,7 +42,7 @@ module Vara
         stemcell_path = stemcell_manager.download_stemcell(stemcell_uri)
         metadata = extract_stemcell_metadata_and_upload(stemcell_path)
         metadata
-      elsif File.exists?(stemcell_uri)
+      elsif File.exist?(stemcell_uri)
         extract_stemcell_metadata_and_upload(stemcell_uri)
       else
         fail InvalidStemcellResourceError, stemcell_uri
@@ -62,7 +62,7 @@ module Vara
       unless [:name, :version].all? { |k| stemcell_name_and_version[k] }
         fail 'The provided stemcell name and version was malformed'
       end
-      fail "The provided release manifest - #{release_file} - does not exist" unless File.exists? release_file
+      fail "The provided release manifest - #{release_file} - does not exist" unless File.exist?(release_file)
       sc_name = stemcell_name_and_version[:name]
       sc_version = stemcell_name_and_version[:version]
       eruby = Erubis::Eruby.new(File.read(release_file), pattern: '<!--% %-->')

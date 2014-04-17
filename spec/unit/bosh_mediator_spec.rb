@@ -240,7 +240,7 @@ module Vara
           actual_yaml = YAML.load_file(dev_release_config)
           actual_yaml['dev_name'].should eq test_dev_release_name
         ensure
-          File.delete dev_release_config if File.exists? dev_release_config
+          File.delete dev_release_config if File.exist?(dev_release_config)
         end
       end
 
@@ -398,7 +398,7 @@ module Vara
           stemcell_vars = Hash[manifest_contents.scan(/^stemcell_(name|version).*= '([^']+)'/)]
           expect(stemcell_vars).to eq('name' => s_name, 'version' => s_version)
         ensure
-          File.delete(test_manifest) if File.exists? test_manifest
+          File.delete(test_manifest) if File.exist?(test_manifest)
         end
 
       end
@@ -414,7 +414,7 @@ module Vara
             @mediator.set_manifest_stemcell_and_version({ name: s_name, version: s_version }, test_manifest)
           end.to raise_error
         ensure
-          File.delete(test_manifest) if File.exists? test_manifest
+          File.delete(test_manifest) if File.exist?(test_manifest)
         end
       end
 

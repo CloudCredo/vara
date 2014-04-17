@@ -18,7 +18,7 @@ module Vara
       file_name = URI.parse(stemcell_url).path.split('/').last
       fail(InvalidStemcellResourceError, stemcell_path.to_s) unless file_name
       download_path = stemcell_download_dir + file_name
-      headers = if File.exists?(download_path)
+      headers = if File.exist?(download_path)
                   { 'If-Modified-Since' => File.mtime(download_path).to_datetime.rfc2822 }
                 else
                   {}
